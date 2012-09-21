@@ -41,3 +41,14 @@ Evaluation of your submission will be based on the following criteria. Additiona
 1. Did your application fulfill the basic requirements?
 1. Did you document the method for setting up and running your application?
 1. Did you follow the instructions for submission?
+
+
+## Armhold notes
+
+### Models
+
+1. Item
+1. Customer
+1. Merchant
+1. Upload
+1. Purchase
