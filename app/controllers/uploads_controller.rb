@@ -26,7 +26,7 @@ class UploadsController < ApplicationController
 
       # TODO: remove file?
 
-      upload = Upload.from_file file
+      upload = Upload.from_file file, current_user
 
       flash[:info] = "upload success!"
       redirect_to view_upload_path upload

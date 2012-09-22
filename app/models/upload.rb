@@ -1,7 +1,9 @@
 # represents a set of purchases uploaded via tab-separated file
 #
 class Upload < ActiveRecord::Base
+
   has_many :purchases
+  belongs_to :user
 
   # returns the gross revenue from all the purchases in this Upload
   #
@@ -11,7 +13,7 @@ class Upload < ActiveRecord::Base
 
   # builds an Upload from a file of tab-separated Purchase lines
   #
-  def self.from_file(file)
+  def self.from_file(file, user)
     result = Upload.new
 
     File.open file do |f|
@@ -47,7 +49,9 @@ class Upload < ActiveRecord::Base
       end
     end
 
+    result.user = user
     result.save
+
     result
   end
 
