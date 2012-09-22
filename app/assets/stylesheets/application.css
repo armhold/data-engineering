@@ -11,3 +11,12 @@
  *= require_self
  *= require_tree .
  */
+
+
+div.alert.alert-error {
+    color: red;
+}
+
+div.alert.alert-info {
+    color: green;
+}
