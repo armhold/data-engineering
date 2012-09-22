@@ -18,49 +18,13 @@ class UploadsController < ApplicationController
       f.write(uploaded_io.read)
     end
 
-    @upload = parse_upload file
-
     # TODO: remove file?
 
-    redirect_to view_upload_path @upload
+    redirect_to view_upload_path Upload.from_file file
+
   end
 
   private
 
-  def parse_upload(file)
-
-    result = Upload.new
-
-    File.open file do |f|
-      while line = f.gets
-        puts "process line: #{f.lineno}"
-        next if f.lineno == 1
-
-        customer_name, item_description, item_price, quantity, merchant_address, merchant_name = line.split /\t/
-
-        merchant = Merchant.find_or_initialize_by_name merchant_name
-        merchant.address = merchant_address
-        merchant.save
-
-        customer = Customer.find_or_initialize_by_name customer_name
-        customer.save
-
-        item = Item.new
-        item.description = item_description
-        item.price = item_price
-
-        purchase = Purchase.new
-        purchase.quantity = quantity
-        purchase.item = item
-        purchase.customer = customer
-        purchase.merchant = merchant
-
-        result.purchases << purchase
-      end
-    end
-
-    result.save
-    result
-  end
 
 end
