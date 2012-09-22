@@ -22,7 +22,10 @@ class Upload < ActiveRecord::Base
         next if f.lineno == 1
 
         # parse the tab-separated line
-        customer_name, item_description, item_price, quantity, merchant_address, merchant_name = line.split /\t/
+        fields = line.split /\t/
+        raise StandardError.new("error on line #{f.lineno}; did not find 6 fields") if fields.length != 6
+
+        customer_name, item_description, item_price, quantity, merchant_address, merchant_name = fields
 
         # find or construct the Merchant
         merchant         = Merchant.find_or_initialize_by_name merchant_name

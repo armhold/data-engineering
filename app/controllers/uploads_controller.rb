@@ -26,10 +26,15 @@ class UploadsController < ApplicationController
 
       # TODO: remove file?
 
-      upload = Upload.from_file file, current_user
+      begin
+        upload = Upload.from_file file, current_user
+        flash[:info] = "upload success!"
+        redirect_to view_upload_path upload
+      rescue StandardError => e
+        flash[:error] = e.message
+        render :index
+      end
 
-      flash[:info] = "upload success!"
-      redirect_to view_upload_path upload
     end
 
   end

@@ -19,6 +19,4 @@ class UploadsControllerTest < ActionController::TestCase
     assert_select "h2#welcome", { :count => 1, :text => "Welcome, John [ Logout ]" }
   end
 
-
-
 end
