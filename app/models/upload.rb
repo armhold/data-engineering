@@ -19,19 +19,24 @@ class Upload < ActiveRecord::Base
         # skip header
         next if f.lineno == 1
 
+        # parse the tab-separated line
         customer_name, item_description, item_price, quantity, merchant_address, merchant_name = line.split /\t/
 
+        # find or construct the Merchant
         merchant         = Merchant.find_or_initialize_by_name merchant_name
         merchant.address = merchant_address
         merchant.save
 
+        # find or construct the Customer
         customer = Customer.find_or_initialize_by_name customer_name
         customer.save
 
+        # create the item
         item             = Item.new
         item.description = item_description
         item.price       = item_price
 
+        # create the purchase to tie it all together
         purchase          = Purchase.new
         purchase.quantity = quantity
         purchase.item     = item
