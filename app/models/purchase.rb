@@ -8,6 +8,9 @@ class Purchase < ActiveRecord::Base
 
   attr_accessible :quantity
 
+  def gross_revenue
+    quantity * item.price
+  end
 
-  # attr_accessible :title, :body
+
 end

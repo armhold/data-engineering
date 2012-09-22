@@ -33,9 +33,16 @@
                         <td><%= purchase.merchant.name %></td>
                     </tr>
                 <% end %>
-
             </table>
+            <br/>
 
+            Gross Revenue: <%=  "$#{@upload.gross_revenue}" %>
+
+            <br/>
+            <br/>
+            <br/>
+
+            <%= link_to "Upload another file".html_safe, uploads_path  %>
         </div>
 
     </div>

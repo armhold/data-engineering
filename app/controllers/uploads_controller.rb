@@ -25,34 +25,38 @@ class UploadsController < ApplicationController
     redirect_to view_upload_path @upload
   end
 
-
-
   private
 
   def parse_upload(file)
 
     result = Upload.new
 
-    IO.foreach file do |line|
-      puts "process line: #{line}"
+    File.open file do |f|
+      while line = f.gets
+        puts "process line: #{f.lineno}"
+        next if f.lineno == 1
 
-      customer_name, item_description, item_price, quantity, merchant_address, merchant_name = line.split /\t/
-      merchant = Merchant.find_or_initialize_by_name merchant_name
-      merchant.address = merchant_address
+        customer_name, item_description, item_price, quantity, merchant_address, merchant_name = line.split /\t/
 
-      customer = Customer.find_or_initialize_by_name customer_name
+        merchant = Merchant.find_or_initialize_by_name merchant_name
+        merchant.address = merchant_address
+        merchant.save
 
-      item = Item.new
-      item.description = item_description
-      item.price = item_price
+        customer = Customer.find_or_initialize_by_name customer_name
+        customer.save
 
-      purchase = Purchase.new
-      purchase.quantity = quantity
-      purchase.item = item
-      purchase.customer = customer
-      purchase.merchant = merchant
+        item = Item.new
+        item.description = item_description
+        item.price = item_price
 
-      result.purchases << purchase
+        purchase = Purchase.new
+        purchase.quantity = quantity
+        purchase.item = item
+        purchase.customer = customer
+        purchase.merchant = merchant
+
+        result.purchases << purchase
+      end
     end
 
     result.save
