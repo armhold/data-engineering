@@ -52,3 +52,9 @@ Evaluation of your submission will be based on the following criteria. Additiona
 1. Merchant
 1. Upload
 1. Purchase
+
+
+## DEV DB Setup
+
+1. create database eng
+1. GRANT ALL PRIVILEGES ON eng.* TO 'armhold'@'localhost' IDENTIFIED BY 'eng123';

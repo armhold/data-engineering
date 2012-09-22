@@ -4,6 +4,7 @@ class CreatePurchases < ActiveRecord::Migration
       t.references :customer
       t.references :merchant
       t.references :upload
+      t.references :item
       t.integer    :quantity
 
       t.timestamps

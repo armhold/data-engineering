@@ -1,0 +1,43 @@
+<div id="page">
+
+    <div id="content">
+        <div id="header">
+            <h1>View Upload</h1>
+        </div>
+
+
+        <div>
+            <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+            <% end %>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <th>Purchaser Name</th>
+                    <th>Item Description</th>
+                    <th>Item Price</th>
+                    <th>Purchase Count</th>
+                    <th>Merchant Address</th>
+                    <th>Merchant Name</th>
+                </tr>
+
+                <% @upload.purchases.each do |purchase| %>
+                    <tr>
+                        <td><%= purchase.customer.name %></td>
+                        <td><%= purchase.item.description %></td>
+                        <td><%= purchase.item.price %></td>
+                        <td><%= purchase.quantity %></td>
+                        <td><%= purchase.merchant.address %></td>
+                        <td><%= purchase.merchant.name %></td>
+                    </tr>
+                <% end %>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
