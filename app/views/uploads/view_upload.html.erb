@@ -37,14 +37,24 @@
             </table>
             <br/>
 
-            Gross Revenue: <%=  "$#{@upload.gross_revenue}" %>
-            <br/>
-            Uploaded by: <%= @upload.user.name_formatted %>
+            <table>
+                <tr>
+                    <td>Gross Revenue:</td>
+                    <td><%=  "$#{@upload.gross_revenue}" %></td>
+                </tr>
+
+                <tr>
+                    <td>Uploaded by:</td>
+                    <td><%= @upload.user.name_formatted %></td>
+                </tr>
+            </table>
+
             <br/>
             <br/>
             <br/>
 
             <%= link_to "Upload another file".html_safe, uploads_path  %>
+
         </div>
 
     </div>

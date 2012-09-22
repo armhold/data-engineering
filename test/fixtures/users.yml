@@ -1,0 +1,12 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email: one@example.com
+  identifier_url: identifier1
+  first_name: John
+  last_name: Doe
+
+
+two:
+  email: two@example.com
+  identifier_url: identifier2

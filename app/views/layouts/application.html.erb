@@ -9,7 +9,7 @@
 <body>
 
 <% if signed_in? %>
-    <h2>Welcome, <%= current_user.first_name %> [ <%= link_to "Logout", session_path, method: :delete %> ] </h2>
+    <h2 id="welcome">Welcome, <%= current_user.first_name %> [ <%= link_to "Logout", session_path, method: :delete %> ] </h2>
 <% end %>
 
 
