@@ -1,4 +1,5 @@
 class UploadsController < ApplicationController
+  before_filter :ensure_signed_in
 
   def index
 
@@ -20,11 +21,8 @@ class UploadsController < ApplicationController
 
     # TODO: remove file?
 
-    redirect_to view_upload_path Upload.from_file file
-
+    upload = Upload.from_file file
+    redirect_to view_upload_path upload
   end
-
-  private
-
 
 end

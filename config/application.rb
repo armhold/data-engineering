@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'rack/openid'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -58,5 +59,9 @@ module DataEngineering
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+
+    # http://blog.sethladd.com/2010/09/ruby-rails-openid-and-google.html
+    config.middleware.use 'Rack::OpenID'
   end
 end

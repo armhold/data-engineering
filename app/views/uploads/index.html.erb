@@ -3,6 +3,9 @@
     <div id="content">
         <div id="header">
             <h1>Uploads</h1>
+
+            <h2>Welcome, <%=  current_user.first_name %></h2>
+            <h2><%= link_to "Logout", session_path, method: :delete %></h2>
         </div>
 
 
