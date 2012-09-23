@@ -23,7 +23,7 @@ class Upload < ActiveRecord::Base
 
         # parse the tab-separated line
         fields = line.split /\t/
-        raise StandardError.new("error on line #{f.lineno}; did not find 6 fields") if fields.length != 6
+        raise StandardError.new("error on line #{f.lineno}; found #{fields.length} fields instead of 6") if fields.length != 6
 
         customer_name, item_description, item_price, quantity, street_address, merchant_name = fields
 

@@ -2,14 +2,16 @@ require 'test_helper'
 
 class UploadTest < ActiveSupport::TestCase
 
-  test "process file" do
-    file = File.dirname(__FILE__) + "/../fixtures/files/sample1.tab"
-
+  test "process files" do
     user = users(:one)
 
+    file = File.dirname(__FILE__) + "/../fixtures/files/sample1.tab"
     upload = Upload.from_file file, user
-
     assert_equal 300, upload.gross_revenue
+
+    file = File.dirname(__FILE__) + "/../fixtures/files/sample2.tab"
+    upload = Upload.from_file file, user
+    assert_equal 3.30, upload.gross_revenue
   end
 
   test "parser flags bad input" do
@@ -18,7 +20,7 @@ class UploadTest < ActiveSupport::TestCase
     user = users(:one)
 
     exception = assert_raise(StandardError) { Upload.from_file file, user }
-    assert_equal "error on line 2; did not find 6 fields", exception.message
+    assert_equal "error on line 2; found 5 fields instead of 6", exception.message
   end
 
   test "merchants can have multiple addresses" do
