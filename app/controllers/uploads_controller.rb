@@ -1,7 +1,7 @@
 class UploadsController < ApplicationController
   before_filter :ensure_signed_in
 
-  def index
+  def new
   end
 
   def show
@@ -12,7 +12,7 @@ class UploadsController < ApplicationController
 
     if params[:upload].blank?
       flash[:error] = "please select a file"
-      render :index
+      render :new
     else
       process_upload
     end
@@ -24,12 +24,11 @@ class UploadsController < ApplicationController
     def process_upload
 
       begin
-        upload = Upload.from_file params[:upload], current_user
-        flash[:info] = "upload success!"
-        redirect_to view_upload_path upload
+        @upload = Upload.from_file params[:upload], current_user
+        redirect_to(@upload, notice: "upload success!")
       rescue StandardError => e
         flash[:error] = e.message
-        render :index
+        render :new
       end
 
     end
