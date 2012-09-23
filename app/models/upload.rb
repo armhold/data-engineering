@@ -11,7 +11,7 @@ class Upload < ActiveRecord::Base
     purchases.inject(0) { |sum, purchase| sum + purchase.gross_revenue }
   end
 
-  # builds an Upload from a file of tab-separated Purchase lines
+  # builds and saves an Upload from a file of tab-separated Purchase lines
   #
   def self.from_file(file, user)
     result = Upload.new
