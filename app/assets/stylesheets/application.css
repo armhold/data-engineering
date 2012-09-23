@@ -20,3 +20,20 @@ div.alert.alert-error {
 div.alert.alert-info {
     color: green;
 }
+
+
+table, th, td
+{
+    border: 1px solid black;
+    border-collapse:collapse;
+}
+
+table th
+{
+    text-align: left;
+}
+
+table td, table th
+{
+    padding: 5px;
+}
