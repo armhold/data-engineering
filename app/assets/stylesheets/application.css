@@ -17,7 +17,7 @@ div.alert.alert-error {
     color: red;
 }
 
-div.alert.alert-info {
+div.alert.alert-info, div.alert.alert-notice {
     color: green;
 }
 

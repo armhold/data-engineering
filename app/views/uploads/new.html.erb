@@ -14,8 +14,14 @@
         <br/>
 
         <%= form_tag({:action => :create}, :multipart => true) do %>
-              <%= file_field_tag 'upload' %>
-              <button type="submit" >Upload</button>
+            Choose a tab-separated file to upload.
+            <br/>
+            <br/>
+            <%= file_field_tag 'upload' %>
+            <br/>
+            <br/>
+
+            <button type="submit">Upload</button>
         <% end %>
 
     </div>
