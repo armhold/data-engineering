@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120923145545) do
+ActiveRecord::Schema.define(:version => 20120923163146) do
+
+  create_table "addresses", :force => true do |t|
+    t.string   "street"
+    t.integer  "merchant_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "addresses", ["merchant_id"], :name => "index_addresses_on_merchant_id"
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -41,8 +50,10 @@ ActiveRecord::Schema.define(:version => 20120923145545) do
     t.integer  "quantity"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "address_id"
   end
 
+  add_index "purchases", ["address_id"], :name => "index_purchases_on_address_id"
   add_index "purchases", ["customer_id"], :name => "index_purchases_on_customer_id"
   add_index "purchases", ["merchant_id"], :name => "index_purchases_on_merchant_id"
   add_index "purchases", ["upload_id"], :name => "index_purchases_on_upload_id"

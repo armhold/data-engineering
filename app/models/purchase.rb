@@ -3,6 +3,7 @@
 class Purchase < ActiveRecord::Base
   belongs_to :customer
   belongs_to :merchant
+  belongs_to :address
   belongs_to :upload
   belongs_to :item
 

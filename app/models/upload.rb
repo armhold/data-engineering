@@ -25,18 +25,18 @@ class Upload < ActiveRecord::Base
         fields = line.split /\t/
         raise StandardError.new("error on line #{f.lineno}; did not find 6 fields") if fields.length != 6
 
-        customer_name, item_description, item_price, quantity, merchant_address, merchant_name = fields
+        customer_name, item_description, item_price, quantity, street_address, merchant_name = fields
 
         # find or construct the Merchant
-        merchant         = Merchant.find_or_initialize_by_name merchant_name
-        merchant.address = merchant_address
-        merchant.save
+        merchant = Merchant.find_or_create_by_name merchant_name
+
+        # find or construct address for the Merchant
+        address = Address.find_or_create_by_merchant_id_and_street merchant.id, street_address
 
         # find or construct the Customer
-        customer = Customer.find_or_initialize_by_name customer_name
-        customer.save
+        customer = Customer.find_or_create_by_name customer_name
 
-        # create the item
+        # always create a new item
         item             = Item.new
         item.description = item_description
         item.price       = item_price
@@ -47,6 +47,7 @@ class Upload < ActiveRecord::Base
         purchase.item     = item
         purchase.customer = customer
         purchase.merchant = merchant
+        purchase.address  = address
 
         result.purchases << purchase
       end

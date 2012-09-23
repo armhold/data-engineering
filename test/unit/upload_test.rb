@@ -21,4 +21,26 @@ class UploadTest < ActiveSupport::TestCase
     assert_equal "error on line 2; did not find 6 fields", exception.message
   end
 
+  test "merchants can have multiple addresses" do
+    file = File.dirname(__FILE__) + "/../fixtures/files/multi-address-merchants.tab"
+
+    user = users(:one)
+
+    upload = Upload.from_file file, user
+    upload.save
+
+    upload = Upload.find(upload.id)
+
+    # first and 2nd purchases are by the same merchant, but with different addresses
+    assert_equal "123 main st", upload.purchases[0].address.street
+    assert_equal "400 broadway", upload.purchases[1].address.street
+
+    # different merchants can have the same address
+    assert_equal "123 fake st", upload.purchases[2].address.street
+    assert_equal "123 fake st", upload.purchases[3].address.street
+
+    # should be different DB entry, even though address is textually identical
+    assert upload.purchases[2].address.id != upload.purchases[3].address.id
+  end
+
 end

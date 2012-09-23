@@ -30,7 +30,7 @@
                         <td><%= purchase.item.description %></td>
                         <td><%= format_in_dollars purchase.item.price %></td>
                         <td><%= purchase.quantity %></td>
-                        <td><%= purchase.merchant.address %></td>
+                        <td><%= purchase.address.street %></td>
                         <td><%= purchase.merchant.name %></td>
                     </tr>
                 <% end %>

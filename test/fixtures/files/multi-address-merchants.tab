@@ -1,0 +1,5 @@
+purchaser name	item description	item price	purchase count	merchant address	merchant name
+Purchaser1	item1	10.0	1	123 main st	merchant1
+Purchaser2	item2	20.0	2	400 broadway	merchant1
+Purchaser3	item3	30.0	3	123 fake st	merchant2
+Purchaser4	item4	40.0	4	123 fake st	merchant3
