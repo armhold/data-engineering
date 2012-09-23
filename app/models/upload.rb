@@ -1,5 +1,7 @@
 # represents a set of purchases uploaded via tab-separated file
 #
+# An upload is also tied to the OpenID user that uploaded it.
+#
 class Upload < ActiveRecord::Base
 
   has_many :purchases

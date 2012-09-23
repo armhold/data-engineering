@@ -1,3 +1,4 @@
+# controller to manage OpenID sessions
 # largely cribbed from http://blog.sethladd.com/2010/09/ruby-rails-openid-and-google.html
 #
 
@@ -17,12 +18,12 @@ class SessionsController < ApplicationController
     if openid = request.env[Rack::OpenID::RESPONSE]
       case openid.status
       when :success
-        ax                = OpenID::AX::FetchResponse.from_success_response(openid)
-        user              = User.where(:identifier_url => openid.display_identifier).first
-        user              ||= User.create!(:identifier_url => openid.display_identifier,
-                                           :email          => ax.get_single('http://axschema.org/contact/email'),
-                                           :first_name     => ax.get_single('http://axschema.org/namePerson/first'),
-                                           :last_name      => ax.get_single('http://axschema.org/namePerson/last'))
+        ax    = OpenID::AX::FetchResponse.from_success_response(openid)
+        user  = User.where(:identifier_url => openid.display_identifier).first
+        user  ||= User.create!(:identifier_url => openid.display_identifier,
+                               :email          => ax.get_single('http://axschema.org/contact/email'),
+                               :first_name     => ax.get_single('http://axschema.org/namePerson/first'),
+                               :last_name      => ax.get_single('http://axschema.org/namePerson/last'))
         session[:user_id] = user.id
         if user.first_name.blank?
           redirect_to(user_additional_info_path(user))

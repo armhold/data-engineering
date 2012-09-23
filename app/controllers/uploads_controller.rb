@@ -1,3 +1,5 @@
+# controller to manage uploads of tab-separated input files
+#
 class UploadsController < ApplicationController
   before_filter :ensure_signed_in
 
