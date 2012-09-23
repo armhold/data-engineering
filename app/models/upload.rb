@@ -11,46 +11,39 @@ class Upload < ActiveRecord::Base
     purchases.inject(0) { |sum, purchase| sum + purchase.gross_revenue }
   end
 
-  # builds and saves an Upload from a file of tab-separated Purchase lines
+  # creates, persists and returns an Upload from a file of tab-separated Purchase lines
   #
   def self.from_file(file, user)
     result = Upload.new
 
-    File.open file do |f|
-      while line = f.gets
-        # skip header
-        next if f.lineno == 1
+    file.open.each.with_index do |line, lineno|
+      # skip header
+      next if lineno == 0
 
-        # parse the tab-separated line
-        fields = line.split /\t/
-        raise StandardError.new("error on line #{f.lineno}; found #{fields.length} fields instead of 6") if fields.length != 6
+      # parse the tab-separated line, with some minimal error-detection
+      fields = line.split /\t/
+      raise StandardError.new("error on line #{lineno + 1}; found #{fields.length} fields instead of 6") if fields.length != 6
 
-        customer_name, item_description, item_price, quantity, street_address, merchant_name = fields
+      customer_name, item_description, item_price, quantity, street_address, merchant_name = fields
 
-        # find or construct the Merchant
-        merchant = Merchant.find_or_create_by_name merchant_name
+      merchant          = Merchant.find_or_create_by_name merchant_name
+      address           = Address.find_or_create_by_merchant_id_and_street merchant.id, street_address
+      customer          = Customer.find_or_create_by_name customer_name
 
-        # find or construct address for the Merchant
-        address = Address.find_or_create_by_merchant_id_and_street merchant.id, street_address
+      # always create a new item
+      item              = Item.new
+      item.description  = item_description
+      item.price        = item_price
 
-        # find or construct the Customer
-        customer = Customer.find_or_create_by_name customer_name
+      # create the purchase to tie it all together
+      purchase          = Purchase.new
+      purchase.quantity = quantity
+      purchase.item     = item
+      purchase.customer = customer
+      purchase.merchant = merchant
+      purchase.address  = address
 
-        # always create a new item
-        item             = Item.new
-        item.description = item_description
-        item.price       = item_price
-
-        # create the purchase to tie it all together
-        purchase          = Purchase.new
-        purchase.quantity = quantity
-        purchase.item     = item
-        purchase.customer = customer
-        purchase.merchant = merchant
-        purchase.address  = address
-
-        result.purchases << purchase
-      end
+      result.purchases << purchase
     end
 
     result.user = user

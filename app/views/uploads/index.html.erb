@@ -13,7 +13,7 @@
         </div>
         <br/>
 
-        <%= form_tag({:action => :process_upload}, :multipart => true) do %>
+        <%= form_tag({:action => :create}, :multipart => true) do %>
               <%= file_field_tag 'upload' %>
               <button type="submit" >Upload</button>
         <% end %>

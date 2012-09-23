@@ -2,32 +2,29 @@ class UploadsController < ApplicationController
   before_filter :ensure_signed_in
 
   def index
-
   end
 
-  def view_upload
+  def show
     @upload = Upload.find(params[:id])
   end
 
-  def process_upload
+  def create
 
     if params[:upload].blank?
       flash[:error] = "please select a file"
       render :index
     else
+      process_upload
+    end
 
-      uploaded_io = params[:upload]
+  end
 
-      # TODO: check filename collision
-      file = Rails.root.join('public', 'uploads', uploaded_io.original_filename)
-      File.open(file, 'w') do |f|
-        f.write(uploaded_io.read)
-      end
+  private
 
-      # TODO: remove file?
+    def process_upload
 
       begin
-        upload = Upload.from_file file, current_user
+        upload = Upload.from_file params[:upload], current_user
         flash[:info] = "upload success!"
         redirect_to view_upload_path upload
       rescue StandardError => e
@@ -36,7 +33,5 @@ class UploadsController < ApplicationController
       end
 
     end
-
-  end
 
 end

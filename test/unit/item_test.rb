@@ -5,7 +5,7 @@ class ItemTest < ActiveSupport::TestCase
   # test that we are using a proper decimal type for currency
   # 0.1 + 0.2 will produce 0.30000000000000004 if using float rather than BigDecimal
   #
-  test "using precision of money" do
+  test "using proper decimal type for representing money" do
 
     item1 = Item.new
     item1.price = 0.10

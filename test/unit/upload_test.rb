@@ -5,18 +5,17 @@ class UploadTest < ActiveSupport::TestCase
   test "process files" do
     user = users(:one)
 
-    file = File.dirname(__FILE__) + "/../fixtures/files/sample1.tab"
+    file = Rack::Test::UploadedFile.new("#{Rails.root}/test/fixtures/files/sample1.tab", "text/plain")
     upload = Upload.from_file file, user
     assert_equal 300, upload.gross_revenue
 
-    file = File.dirname(__FILE__) + "/../fixtures/files/sample2.tab"
+    file = Rack::Test::UploadedFile.new("#{Rails.root}/test/fixtures/files/sample2.tab", "text/plain")
     upload = Upload.from_file file, user
     assert_equal 3.30, upload.gross_revenue
   end
 
   test "parser flags bad input" do
-    file = File.dirname(__FILE__) + "/../fixtures/files/bad-input.tab"
-
+    file = Rack::Test::UploadedFile.new("#{Rails.root}/test/fixtures/files/bad-input.tab", "text/plain")
     user = users(:one)
 
     exception = assert_raise(StandardError) { Upload.from_file file, user }
@@ -24,8 +23,7 @@ class UploadTest < ActiveSupport::TestCase
   end
 
   test "merchants can have multiple addresses" do
-    file = File.dirname(__FILE__) + "/../fixtures/files/multi-address-merchants.tab"
-
+    file = Rack::Test::UploadedFile.new("#{Rails.root}/test/fixtures/files/multi-address-merchants.tab", "text/plain")
     user = users(:one)
 
     upload = Upload.from_file file, user
