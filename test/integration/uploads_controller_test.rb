@@ -3,7 +3,7 @@ require 'test_helper'
 class UploadsControllerTest < ActionController::TestCase
 
   test "cannot access uploads page when not logged in" do
-    get :index
+    get :new
 
     assert_redirected_to new_session_path
   end
@@ -12,7 +12,7 @@ class UploadsControllerTest < ActionController::TestCase
     user = users(:one)
     @request.session[:user_id] = user
 
-    get :index
+    get :new
 
     assert_equal "200", response.code
     assert_select "div#upload-page", { :count => 1}
