@@ -6,9 +6,12 @@ My submission is in the form of a standard Rails 3.2.x app.
 
 From a terminal, execute the following commands:
 
-1. `bundle install`
-1. `rails s`
-1. In another terminal window, execute: `open http://localhost:3000`
+1. `bundle install`  -- this will install the required dependencies using bundler.
+1. `rake db:migrate` -- this will create the initial (empty) database.
+1. `rails s` -- this will start up the server
+
+Now you can open a web browser and find the running application at: `http://localhost:3000`
+
 
 ## Tests
 
@@ -25,4 +28,4 @@ of the application.
 ### Persistence
 
 The app uses Rails' standard sqlite3 for persistence. You can examine the table structure and
-interact with the data using the sqlite3 client: `bundle exec sqlite3 db/development.sqlite3`.
+interact with the data using the sqlite3 client: `bundle exec sqlite3 db/development.sqlite3`
