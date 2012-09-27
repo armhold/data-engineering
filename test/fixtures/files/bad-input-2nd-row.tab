@@ -1,0 +1,5 @@
+purchaser name	item description	item price	purchase count	merchant address	merchant name
+Purchaser1	item1	10.0	1	123 main st	merchant1
+bad_data_here
+Purchaser3	item3	30.0	3	123 Fake St	merchant2
+Purchaser4	item4	40.0	4	123 Fake St	merchant3

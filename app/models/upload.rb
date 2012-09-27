@@ -7,6 +7,9 @@ class Upload < ActiveRecord::Base
   has_many :purchases
   belongs_to :user
 
+  validates :user, presence: true
+  validates_associated :purchases, presence: true
+
   # returns the gross revenue from all the purchases in this Upload
   #
   def gross_revenue
@@ -18,38 +21,32 @@ class Upload < ActiveRecord::Base
   def self.from_file(file, user)
     result = Upload.new
 
-    file.open.each.with_index do |line, lineno|
-      # skip header
-      next if lineno == 0
+    Upload.transaction do
+      file.open.each.with_index do |line, lineno|
+        # skip header
+        next if lineno == 0
 
-      # parse the tab-separated line, with some minimal error-detection
-      fields = line.split /\t/
-      raise StandardError.new("error on line #{lineno + 1}; found #{fields.length} fields instead of 6") if fields.length != 6
+        # parse the tab-separated line, with some minimal error-detection
+        fields = line.split /\t/
+        raise StandardError.new("error on line #{lineno + 1}; found #{fields.length} fields instead of 6") if fields.length != 6
 
-      customer_name, item_description, item_price, quantity, street_address, merchant_name = fields
+        customer_name, item_description, item_price, quantity, street_address, merchant_name = fields
 
-      merchant          = Merchant.find_or_create_by_name merchant_name
-      address           = Address.find_or_create_by_merchant_id_and_street merchant.id, street_address
-      customer          = Customer.find_or_create_by_name customer_name
+        merchant = Merchant.find_or_create_by_name merchant_name
+        address  = Address.find_or_create_by_merchant_id_and_street merchant, street_address
+        customer = Customer.find_or_create_by_name customer_name
 
-      # always create a new item
-      item              = Item.new
-      item.description  = item_description
-      item.price        = item_price
+        purchase = result.purchases.build(quantity: quantity, customer: customer, merchant: merchant, address: address)
+        purchase.build_item(description: item_description, price: item_price)
 
-      # create the purchase to tie it all together
-      purchase          = Purchase.new
-      purchase.quantity = quantity
-      purchase.item     = item
-      purchase.customer = customer
-      purchase.merchant = merchant
-      purchase.address  = address
+        # annoying that "build" does not seem to set purchase.upload => upload.
+        # The unit test won't validate purchase without this, even though it persists just fine.
+        purchase.upload = result
+      end
 
-      result.purchases << purchase
+      result.user = user
+      result.save
     end
-
-    result.user = user
-    result.save
 
     result
   end

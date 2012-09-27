@@ -7,4 +7,6 @@
 class Address < ActiveRecord::Base
   belongs_to :merchant
   attr_accessible :street
+
+  validates :street, presence: true
 end

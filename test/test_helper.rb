@@ -10,4 +10,16 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  # customized by armhold as per http://www.jetbrains.com/ruby/webhelp/minitest.html
+  #
+  require 'minitest/reporters'
+  MiniTest::Unit.runner = MiniTest::SuiteRunner.new
+  if ENV["RM_INFO"] || ENV["TEAMCITY_VERSION"]
+    MiniTest::Unit.runner.reporters << MiniTest::Reporters::RubyMineReporter.new
+  elsif ENV['TM_PID']
+    MiniTest::Unit.runner.reporters << MiniTest::Reporters::RubyMateReporter.new
+  else
+    MiniTest::Unit.runner.reporters << MiniTest::Reporters::ProgressReporter.new
+  end
 end

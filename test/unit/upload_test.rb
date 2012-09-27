@@ -18,8 +18,11 @@ class UploadTest < ActiveSupport::TestCase
     file = Rack::Test::UploadedFile.new("#{Rails.root}/test/fixtures/files/bad-input.tab", "text/plain")
     user = users(:one)
 
-    exception = assert_raise(StandardError) { Upload.from_file file, user }
-    assert_equal "error on line 2; found 5 fields instead of 6", exception.message
+    assert_no_difference(%w(Upload.count Purchase.count Item.count Merchant.count Address.count Customer.count)) do
+      exception = assert_raise(StandardError) { Upload.from_file file, user }
+      assert_equal "error on line 2; found 5 fields instead of 6", exception.message
+    end
+
   end
 
   test "merchants can have multiple addresses" do
@@ -27,7 +30,7 @@ class UploadTest < ActiveSupport::TestCase
     user = users(:one)
 
     upload = Upload.from_file file, user
-    upload.save
+    assert upload.valid?,  upload.purchases.inject { |s, p| "#{s}, #{p.errors.messages.to_s}" }
 
     upload = Upload.find(upload.id)
 
@@ -40,7 +43,7 @@ class UploadTest < ActiveSupport::TestCase
     assert_equal "123 fake st", upload.purchases[3].address.street
 
     # should be different DB entry, even though address is textually identical
-    assert upload.purchases[2].address.id != upload.purchases[3].address.id
+    assert_not_equal upload.purchases[2].address.id, upload.purchases[3].address.id
   end
 
 end

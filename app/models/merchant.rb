@@ -4,7 +4,9 @@
 # A merchant may have multiple addresses.
 #
 class Merchant < ActiveRecord::Base
-  attr_accessible :address, :name
+  attr_accessible :name
 
   has_many :addresses
+
+  validates :name, presence: true
 end

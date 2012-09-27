@@ -9,7 +9,9 @@ class Purchase < ActiveRecord::Base
   belongs_to :upload
   belongs_to :item
 
-  attr_accessible :quantity
+  attr_accessible :customer, :merchant, :address, :upload, :item, :quantity
+
+  validates :customer, :merchant, :address, :upload, :item, :quantity, presence: true
 
   def gross_revenue
     quantity * item.price
