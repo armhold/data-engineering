@@ -1,11 +1,26 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  customer: 
-  merchant: 
-  upload: 
+p1:
+  customer: c1
+  item: i1
+  quantity: 1
+  merchant: m1
+  address: a1
+  upload: u1
 
-two:
-  customer: 
-  merchant: 
-  upload: 
+p2:
+  customer: c1
+  item: i1
+  quantity: 2
+  merchant: m2
+  address: a2
+  upload: u1
+
+p3:
+  customer: c2
+  quantity: 3
+  item: i2
+  merchant: m1
+  address: a1
+  upload: u2
+

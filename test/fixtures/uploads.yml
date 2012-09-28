@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-m1:
-  name: Merchant 1
+u1:
+  user: one
 
-m2:
-  name: Merchant 2
+u2:
+  user: two

@@ -2,7 +2,7 @@
 
     <div id="content">
         <div id="header">
-            <h1>View Upload</h1>
+            <h1>View Upload # <%= "#{@upload.id}" %></h1>
         </div>
 
 
@@ -54,6 +54,10 @@
             <br/>
 
             <%= link_to "Upload another file".html_safe, new_upload_path  %>
+            <br/>
+            <br/>
+
+            <%= link_to "View all uploads".html_safe, uploads_path  %>
 
         </div>
 

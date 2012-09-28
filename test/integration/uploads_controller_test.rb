@@ -19,4 +19,15 @@ class UploadsControllerTest < ActionController::TestCase
     assert_select "h2#welcome", { :count => 1, :text => "Welcome, John [ Logout ]" }
   end
 
+  test "users can access their own uploads" do
+    user = users(:one)
+    @request.session[:user_id] = user
+
+    upload = uploads(:u1)
+    get :show, id: upload
+
+    assert_equal "200", response.code
+    assert_select "h1", { :count => 1, :text => "View Upload # #{upload.id}" }
+  end
+
 end

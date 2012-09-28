@@ -1,0 +1,43 @@
+<div id="upload-page">
+
+    <div id="content">
+        <div id="header">
+            <h1>List of Uploads</h1>
+
+        </div>
+
+        <div>
+            <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+            <% end %>
+        </div>
+        <br/>
+
+        <%= will_paginate @uploads %>
+        <table>
+            <tr>
+                <th>Upload</th>
+                <th>Uploaded By</th>
+                <th>Date</th>
+                <th>Revenue</th>
+            </tr>
+
+            <% @uploads.each do |upload| %>
+                <tr>
+                    <th><%=  link_to "Upload # #{upload.id}", upload_path(upload) %></th>
+                    <th><%= upload.user.name_formatted %></th>
+                    <th><%= l upload.created_at, format: :short  %></th>
+                    <th><%= number_to_currency upload.gross_revenue %></th>
+                </tr>
+            <% end %>
+
+         </table>
+        <br/>
+        <br/>
+        <br/>
+
+        Click <%= link_to 'here to upload a new file', new_upload_path %>.
+
+    </div>
+
+</div>

@@ -3,6 +3,10 @@
 class UploadsController < ApplicationController
   before_filter :ensure_signed_in
 
+  def index
+    @uploads = Upload.paginate(page: params[:page], per_page: 20)
+  end
+
   def new
   end
 

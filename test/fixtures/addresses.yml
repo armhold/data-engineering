@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+a1:
+  street: 1 first street
+  merchant: m1
+
+
+a2:
+  street: 2 second street
+  merchant: m2
