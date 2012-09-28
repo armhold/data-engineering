@@ -30,4 +30,15 @@ class UploadsControllerTest < ActionController::TestCase
     assert_select "h1", { :count => 1, :text => "View Upload # #{upload.id}" }
   end
 
+  test "users cannot access other users' uploads" do
+    user = users(:one)
+    @request.session[:user_id] = user
+
+    upload = uploads(:u2)
+    get :show, id: upload
+
+    assert_equal "403", response.code
+    assert_select "h1", { :count => 1, :text => "Access Denied" }
+  end
+
 end

@@ -1,0 +1,18 @@
+<div id="page">
+
+    <div id="content">
+        <div id="header">
+            <h1>Access Denied</h1>
+        </div>
+
+        <p>
+            Sorry, you do not have access to # <%= "#{@upload.id}" %>.
+        </p>
+
+        <p>
+            <%= link_to "Log on as another user?", session_path, method: :delete %>
+        </p>
+
+    </div>
+
+</div>

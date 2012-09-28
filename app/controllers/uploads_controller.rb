@@ -12,6 +12,11 @@ class UploadsController < ApplicationController
 
   def show
     @upload = Upload.find(params[:id])
+    if @upload.user == current_user
+      render :show
+    else
+      render :access_denied, :status => :forbidden
+    end
   end
 
   def create
