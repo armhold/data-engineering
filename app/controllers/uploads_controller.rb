@@ -24,21 +24,13 @@ class UploadsController < ApplicationController
       flash[:error] = "please select a file"
       render :new
     else
-      process_upload
-    end
-  end
-
-  private
-
-    def process_upload
-      begin
-        @upload = Upload.from_file params[:upload], current_user
-        if @upload.errors.empty?
-          redirect_to(@upload, notice: "upload success!")
-        else
-          redirect_to new_upload_path, alert: @upload.errors.full_messages.to_sentence
-        end
+      @upload = Upload.from_file params[:upload], current_user
+      if @upload.errors.empty?
+        redirect_to(@upload, notice: "upload success!")
+      else
+        redirect_to new_upload_path, alert: @upload.errors.full_messages.to_sentence
       end
     end
+  end
 
 end
