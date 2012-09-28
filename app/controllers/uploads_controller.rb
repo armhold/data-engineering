@@ -36,8 +36,7 @@ class UploadsController < ApplicationController
         if @upload.errors.empty?
           redirect_to(@upload, notice: "upload success!")
         else
-          flash[:error] = @upload.errors.full_messages.to_sentence
-          render :new
+          redirect_to new_upload_path, alert: @upload.errors.full_messages.to_sentence
         end
       end
     end

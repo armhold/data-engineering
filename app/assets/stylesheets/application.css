@@ -13,7 +13,7 @@
  */
 
 
-div.alert.alert-error {
+div.alert.alert-error, div.alert.alert-alert {
     color: red;
 }
 
@@ -41,3 +41,4 @@ table td, table th
 body {
     margin: 50px auto auto 100px;
 }
+
