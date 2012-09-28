@@ -12,6 +12,9 @@ From a terminal, execute the following commands:
 
 Now you can open a web browser and find the running application at: `http://localhost:3000`
 
+There are some sample input files in `test/fixtures/files`, including some examples designed to
+test bad-input processing.
+
 
 ## Tests
 
@@ -24,8 +27,11 @@ There are a few unit/integration tests included with the implementation. Tests c
 The app is secured via OpenID. You will need a valid Google-based OpenID account to access the protected areas
 of the application.
 
+You can also try logging on with a different OpenID account to test the access control mechanism for
+individual uploads.
+
 
 ### Persistence
 
 The app uses Rails' standard sqlite3 for persistence. You can examine the table structure and
-interact with the data using the sqlite3 client: `bundle exec sqlite3 db/development.sqlite3`
+interact with the data using the sqlite client: `rails dbconsole`.

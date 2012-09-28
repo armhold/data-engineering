@@ -6,5 +6,6 @@
 class Item < ActiveRecord::Base
   attr_accessible :description, :price
 
-  validates :description, :price, presence: true
+  validates :description, presence: true
+  validates_numericality_of :price
 end

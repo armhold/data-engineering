@@ -18,16 +18,12 @@
             <tr>
                 <th>Upload</th>
                 <th>Uploaded By</th>
-                <th>Date</th>
-                <th>Revenue</th>
             </tr>
 
             <% @uploads.each do |upload| %>
                 <tr>
                     <th><%=  link_to "Upload # #{upload.id}", upload_path(upload) %></th>
                     <th><%= upload.user.name_formatted %></th>
-                    <th><%= l upload.created_at, format: :short  %></th>
-                    <th><%= number_to_currency upload.gross_revenue %></th>
                 </tr>
             <% end %>
 

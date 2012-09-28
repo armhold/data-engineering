@@ -28,7 +28,7 @@
                     <tr>
                         <td><%= purchase.customer.name %></td>
                         <td><%= purchase.item.description %></td>
-                        <td><%= format_in_dollars purchase.item.price %></td>
+                        <td><%= number_to_currency purchase.item.price %></td>
                         <td><%= purchase.quantity %></td>
                         <td><%= purchase.address.street %></td>
                         <td><%= purchase.merchant.name %></td>
@@ -40,7 +40,7 @@
             <table>
                 <tr>
                     <td>Gross Revenue:</td>
-                    <td><%= format_in_dollars @upload.gross_revenue %></td>
+                    <td><%= number_to_currency @upload.gross_revenue %></td>
                 </tr>
 
                 <tr>
