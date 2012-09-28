@@ -11,7 +11,9 @@ class Purchase < ActiveRecord::Base
 
   attr_accessible :customer, :merchant, :address, :upload, :item, :quantity
 
-  validates :customer, :merchant, :address, :upload, :item, :quantity, presence: true
+  validates :customer, :merchant, :address, :upload, :item, presence: true
+  validates_numericality_of :quantity
+  validates_associated :customer, :merchant, :address, :item
 
   def gross_revenue
     quantity * item.price

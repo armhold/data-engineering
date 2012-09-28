@@ -28,7 +28,10 @@ class Upload < ActiveRecord::Base
 
         # parse the tab-separated line, with some minimal error-detection
         fields = line.split /\t/
-        raise StandardError.new("error on line #{lineno + 1}; found #{fields.length} fields instead of 6") if fields.length != 6
+        if fields.length != 6
+          result.errors.add(:base, "error on line #{lineno + 1}; found #{fields.length} fields instead of 6")
+          break
+        end
 
         customer_name, item_description, item_price, quantity, street_address, merchant_name = fields
 
@@ -45,7 +48,7 @@ class Upload < ActiveRecord::Base
       end
 
       result.user = user
-      result.save
+      result.save if result.errors.empty?
     end
 
     result

@@ -33,10 +33,12 @@ class UploadsController < ApplicationController
     def process_upload
       begin
         @upload = Upload.from_file params[:upload], current_user
-        redirect_to(@upload, notice: "upload success!")
-      rescue StandardError => e
-        flash[:error] = e.message
-        render :new
+        if @upload.errors.empty?
+          redirect_to(@upload, notice: "upload success!")
+        else
+          flash[:error] = @upload.errors.full_messages.to_sentence
+          render :new
+        end
       end
     end
 

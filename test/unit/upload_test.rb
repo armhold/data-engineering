@@ -19,8 +19,7 @@ class UploadTest < ActiveSupport::TestCase
     user = users(:one)
 
     assert_no_difference(%w(Upload.count Purchase.count Item.count Merchant.count Address.count Customer.count)) do
-      exception = assert_raise(StandardError) { Upload.from_file file, user }
-      assert_equal "error on line 2; found 5 fields instead of 6", exception.message
+      assert_equal "error on line 2; found 5 fields instead of 6", Upload.from_file(file, user).errors.full_messages.to_sentence
     end
 
   end
