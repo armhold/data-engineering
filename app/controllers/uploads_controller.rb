@@ -28,7 +28,7 @@ class UploadsController < ApplicationController
       if @upload.errors.empty?
         redirect_to(@upload, notice: "upload success!")
       else
-        redirect_to new_upload_path, alert: @upload.errors.full_messages.to_sentence
+        redirect_to new_upload_url, alert: @upload.errors.full_messages.to_sentence
       end
     end
   end
